@@ -29,11 +29,7 @@ class ApiWeather
                 $arr['cord'] = $weath['coord'];
             }
 dd($arr);
-//            return [
-//                'status' => 'success',
-//                'code' => $weath->status(),
-//                'data' => $weath->json(),
-//            ];
+
         }catch(\Exception $exception) {
             dd($exception);
             return [
