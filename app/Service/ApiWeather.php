@@ -10,26 +10,38 @@ class ApiWeather
     public function consultForCity($city = null)
     {
         try {
-            $weath = Http::get("https://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=b47cfe3932dfbe8c4238d44c8e2f4bb0");
+            $weath = Http::get("https://api.openweathermap.org/data/2.5/weather?q=Brazil&units=metric&lang=pt_br&appid=b47cfe3932dfbe8c4238d44c8e2f4bb0");
             $arr = [];
 
             if ($weath->successful()) {
-                $weath = $weath->json();
-
-                foreach($weath['weather'] as $itemWeath) {
-//                    dd($this->configIcon($itemWeath['icon']));
-                    $arr['temp']['description'] = $this->configDescription($itemWeath['description']);
+                $weathJson = $weath->json();
+//                dd($weathJson);
+//dd($weathJson);
+                foreach($weathJson['weather'] as $itemWeath) {
+                    $arr['temp']['description'] = $itemWeath['description'];
                     $arr['temp']['icon'] = $this->configIcon($itemWeath['icon']);
                 }
 
                 $arr['temp']['wind'] = $weath['wind'];
+                $arr['temp']['main'] = $weath['main'];
+                $arr['temp']['city'] = $weath['name'];
                 $data = Carbon::now() ;
                 $arr['data'] = $data->formatLocalized('%d,%h %Y') ;
                 $arr['time'] = $weath['timezone'];
-                $arr['cord'] = $weath['coord'];
+                foreach($weath['coord'] as $key => $coord) {
+                    if ($key == 'lon') {
+                        $arr['cord']['Longitude'] = $coord;
+                    } else if ($key == 'lat') {
+                        $arr['cord']['Latitude'] = $coord;
+                    }
+                }
             }
-dd($arr);
 
+            return [
+                'status' => 'success',
+                'code' => $weath->status(),
+                'data' => $arr,
+            ];
         }catch(\Exception $exception) {
             dd($exception);
             return [
@@ -44,7 +56,10 @@ dd($arr);
         $descriptions = [
             'light rain' => 'chuva leve',
             'heavy intensity rain' => 'chuva de forte intensidade',
-            'moderate rain' => 'chuva moderada'
+            'moderate rain' => 'chuva moderada',
+            'overcast clouds' => 'nuvens nubladas',
+            'nublado' => 'nublado',
+            'nuvens dispersas' => 'nuvens dispersas',
         ];
 
         return $descriptions[$description];
@@ -52,9 +67,13 @@ dd($arr);
 
     public function configIcon($icon)
     {
-//        dd($icon);
         $icons = [
-            '10n' => 'rainy'
+            '10n' => 'rainy',
+            '04d' => 'rainy',
+            '10d' => 'rainy',
+            '03n' => 'rainy',
+            '03d' => 'rainy',
+            '01d' => 'rainy',
         ];
 
         return $icons[$icon];

@@ -20,7 +20,12 @@ class Weather extends Component
     }
     public function render()
     {
-        $this->api();
-        return view('livewire.api.weather');
+        $response = new StdClass();
+        $response->weather = $this->api();
+        $response->jv = '$this->api();';
+//        dd($response->weather['cord']);
+
+
+        return view('livewire.api.weather', ['response' => $response]);
     }
 }
