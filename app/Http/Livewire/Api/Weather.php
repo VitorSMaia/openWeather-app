@@ -8,10 +8,17 @@ use StdClass;
 
 class Weather extends Component
 {
-    public function api()
+    public $city = 'Fortaleza';
+
+    public function updatedCity()
+    {
+        $this->api($this->city);
+    }
+
+    public function api($city = null)
     {
         $apiWeather = new ApiWeather;
-        $returnApiWeather =  $apiWeather->consultForCity();
+        $returnApiWeather =  $apiWeather->consultForCity($city);
         if ($returnApiWeather['status'] != 'error') {
             return $returnApiWeather['data'];
         } else if ($returnApiWeather['status'] != 'success') {
@@ -21,10 +28,7 @@ class Weather extends Component
     public function render()
     {
         $response = new StdClass();
-        $response->weather = $this->api();
-        $response->jv = '$this->api();';
-//        dd($response->weather['cord']);
-
+        $response->weather = $this->api($this->city);
 
         return view('livewire.api.weather', ['response' => $response]);
     }

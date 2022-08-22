@@ -1,11 +1,11 @@
 <div>
     <div class="flex flex-col justify-center items-center m-20">
-        <div class="rounded-t-xl bg-gray-300 border-b-2 w-20 h-10 w-[500px] flex justify-center h-max ">
+        <div class="rounded-t-xl bg-gray-300 border-b-2 w-20 h-10 lg:w-[500px] w-[400px] flex justify-center h-max ">
             <div class="m-5">
                 <p>Tempo e Temperatura</p>
             </div>
         </div>
-        <div class="h-max w-[500px] bg-gray-100">
+        <div class="h-max lg:w-[500px] w-[400px] bg-gray-100">
             <div class="flex flex-col justify-center items-center m-10">
 
                 <p>Cidade:</p>
@@ -23,12 +23,12 @@
                 @endforeach
             </div>
         </div>
-        <div class="rounded-b-xl bg-gray-300 border-t-2 w-20 h-max w-[500px]">
+        <div class="rounded-b-xl bg-gray-300 border-t-2 w-20 h-max lg:w-[500px] w-[400px]">
             <div class="m-5">
-                <select class="w-full" name="" id="">
-                    <option value="">Cidade 1</option>
-                    <option value="">Cidade 1</option>
-                    <option value="">Cidade 1</option>
+                <select class="w-full" name="" id="" wire:model="city">
+                    <option value="Fortaleza">Fortaleza</option>
+                    <option value="São Paulo">São Paulo</option>
+                    <option value="Canoas">Canoas</option>
                     <option value="">Cidade 1</option>
                     <option value="">Cidade 1</option>
                     <option value="">Cidade 1</option>

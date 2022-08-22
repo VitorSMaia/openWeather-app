@@ -10,7 +10,7 @@ class ApiWeather
     public function consultForCity($city = null)
     {
         try {
-            $weath = Http::get("https://api.openweathermap.org/data/2.5/weather?q=Brazil&units=metric&lang=pt_br&appid=b47cfe3932dfbe8c4238d44c8e2f4bb0");
+            $weath = Http::get("https://api.openweathermap.org/data/2.5/weather?q=$city&units=metric&lang=pt_br&appid=b47cfe3932dfbe8c4238d44c8e2f4bb0");
             $arr = [];
 
             if ($weath->successful()) {
@@ -74,6 +74,8 @@ class ApiWeather
             '03n' => 'rainy',
             '03d' => 'rainy',
             '01d' => 'rainy',
+            '01n' => 'rainy',
+            '04n' => 'rainy',
         ];
 
         return $icons[$icon];
